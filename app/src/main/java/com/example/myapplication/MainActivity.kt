@@ -10,7 +10,7 @@ import android.os.RemoteException
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.databinding.ActivityMainBinding
-import com.example.servicetest.IMyAidlInterface
+import com.example.mylibrary.IMyAidlInterface
 
 class MainActivity : AppCompatActivity() {
 

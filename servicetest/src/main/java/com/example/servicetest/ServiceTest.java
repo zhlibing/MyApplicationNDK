@@ -8,6 +8,8 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import com.example.mylibrary.IMyAidlInterface;
+
 public class ServiceTest extends Service {
     private String TAG = ServiceTest.class.getCanonicalName();
     MyBinder myBinder = new MyBinder();
