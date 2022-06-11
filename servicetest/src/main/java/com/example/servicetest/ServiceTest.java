@@ -9,6 +9,7 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 
 import com.example.mylibrary.IMyAidlInterface;
+import com.example.mylibrary.LoginEntry;
 
 public class ServiceTest extends Service {
     private String TAG = ServiceTest.class.getCanonicalName();
@@ -44,6 +45,15 @@ public class ServiceTest extends Service {
         public String basicTypes(int anInt, long aLong, boolean aBoolean, float aFloat, double aDouble, String aString) throws RemoteException {
             Log.d(TAG, anInt + ">" + aLong + ">" + aBoolean + ">" + aFloat + ">" + aDouble + ">" + aString);
             return "this is from server";
+        }
+
+        @Override
+        public LoginEntry login(LoginEntry loginEntry) throws RemoteException {
+            Log.d(TAG, loginEntry.getUserName() + loginEntry.getPassWord());
+            LoginEntry loginEntry1 = new LoginEntry();
+            loginEntry1.setUserName("22");
+            loginEntry1.setPassWord("bb");
+            return loginEntry1;
         }
     }
 }

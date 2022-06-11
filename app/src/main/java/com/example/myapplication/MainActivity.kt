@@ -5,12 +5,12 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
-import android.os.IBinder.DeathRecipient
 import android.os.RemoteException
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.databinding.ActivityMainBinding
 import com.example.mylibrary.IMyAidlInterface
+import com.example.mylibrary.LoginEntry
 
 class MainActivity : AppCompatActivity() {
 
@@ -57,6 +57,13 @@ class MainActivity : AppCompatActivity() {
                     0.3,
                     "sssss"
                 )
+                val loginEntry = LoginEntry()
+                loginEntry.userName = "11"
+                loginEntry.passWord = "aa"
+                Toast.makeText(
+                    applicationContext, iMyAidlInterface!!.login(loginEntry).userName +
+                            iMyAidlInterface!!.login(loginEntry).passWord, Toast.LENGTH_LONG
+                ).show()
             }
         }
     }
