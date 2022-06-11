@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun onServiceDisconnected(componentName: ComponentName) {
-
+            Toast.makeText(applicationContext, "onServiceDisconnected", Toast.LENGTH_LONG).show()
         }
     }
 
