@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.databinding.ActivityMainBinding
 import com.example.mylibrary.IMyAidlInterface
 import com.example.mylibrary.LoginEntry
+import com.example.mylibrary.LoginManager
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,8 +26,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         var people = People()
         var jniDynamicLoad = JNIDynamicLoad()
-        // Example of a call to a native method
+
         binding.sampleText.text = stringFromJNI(2) + getStingFromPeople("???", people)
+
+        LoginManager.getInstance().regist(this, serviceConnection);
 
         binding.sampleText.setOnClickListener { _ ->
             Toast.makeText(applicationContext, people.name + people.sex, Toast.LENGTH_LONG).show();
@@ -39,24 +42,16 @@ class MainActivity : AppCompatActivity() {
             nativeThreadCallback(iThreadCallbackMethod)
         }
         binding.button.setOnClickListener { _ ->
-            val intent = Intent()
-            intent.setPackage("com.example.servicetest")
-            intent.action = "com.example.servicetest.testservice"
-            bindService(intent, serviceConnection, BIND_AUTO_CREATE)
+//            val intent = Intent()
+//            intent.setPackage("com.example.servicetest")
+//            intent.action = "com.example.servicetest.testservice"
+//            bindService(intent, serviceConnection, BIND_AUTO_CREATE)
 
 //            val intent = Intent()
 //            intent.setClassName("com.example.servicetest", "com.example.servicetest.ServiceTest")
 //            bindService(intent, serviceConnection, BIND_AUTO_CREATE)
 
             if (iMyAidlInterface != null) {
-                iMyAidlInterface!!.basicTypes(
-                    10,
-                    100000,
-                    false,
-                    0.01f,
-                    0.3,
-                    "sssss"
-                )
                 val loginEntry = LoginEntry()
                 loginEntry.userName = "11"
                 loginEntry.passWord = "aa"
@@ -105,6 +100,11 @@ class MainActivity : AppCompatActivity() {
 
     var iThreadCallbackMethod = ICallbackMethod {
         Toast.makeText(applicationContext, "threadcallback", Toast.LENGTH_LONG).show();
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        LoginManager.getInstance().unRegist(this, serviceConnection)
     }
 
     /**
