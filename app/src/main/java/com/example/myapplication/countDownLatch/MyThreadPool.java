@@ -62,8 +62,16 @@ public class MyThreadPool {
             countDownLatch.await();
             System.out.println("所有线程执行完毕,当前是" + Thread.currentThread().getName());
             System.out.println("Map大小：" + map.size());
+            myThreadPool.shutdown();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 记得关闭
+     */
+    private void shutdown() {
+        executorService.shutdown();
     }
 }
