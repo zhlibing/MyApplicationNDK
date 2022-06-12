@@ -14,6 +14,9 @@ public class ProxyTest {
 
     void testProxy() {
         Dog dog = new Dog();
+        /**
+         * 动态代理
+         */
         animal = (Animal) Proxy.newProxyInstance(this.getClass().getClassLoader(), new Class[]{Animal.class}, new MyHandler(dog));
         animal.run("10 km");
         String s = animal.speak("叽叽叽");
