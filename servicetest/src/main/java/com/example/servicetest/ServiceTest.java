@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 
 import com.example.mylibrary.IMyAidlInterface;
 import com.example.mylibrary.LoginEntry;
+import com.example.mylibrary.pool.BinderPoolImpl;
 
 public class ServiceTest extends Service {
     private String TAG = ServiceTest.class.getCanonicalName();
@@ -19,7 +20,7 @@ public class ServiceTest extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         Log.d(TAG, "onBind");
-        return myBinder;
+        return new BinderPoolImpl();
     }
 
     @Override

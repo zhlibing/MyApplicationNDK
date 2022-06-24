@@ -1,7 +1,6 @@
 package com.example.myapplication
 
 import android.content.ComponentName
-import android.content.Intent
 import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
@@ -9,9 +8,9 @@ import android.os.RemoteException
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.databinding.ActivityMainBinding
-import com.example.mylibrary.IMyAidlInterface
-import com.example.mylibrary.LoginEntry
-import com.example.mylibrary.LoginManager
+import com.example.mylibrary.*
+import com.example.mylibrary.pool.BinderPool
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,7 +28,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.sampleText.text = stringFromJNI(2) + getStingFromPeople("???", people)
 
-        LoginManager.getInstance().regist(this, serviceConnection);
+//        LoginManager.getInstance().regist(this, serviceConnection);
 
         binding.sampleText.setOnClickListener { _ ->
             Toast.makeText(applicationContext, people.name + people.sex, Toast.LENGTH_LONG).show();
@@ -61,6 +60,25 @@ class MainActivity : AppCompatActivity() {
                 ).show()
             }
         }
+
+        Thread {
+            try {
+                val binder = BinderPool.getInstance(applicationContext)
+                    .queryBinder(BinderPool.QUERY_CODE_BINDER_A)
+                val calc = IBinderA.Stub.asInterface(binder).calc(1, 2)
+                runOnUiThread {
+                    Toast.makeText(applicationContext, "calc:$calc", Toast.LENGTH_SHORT).show()
+                }
+                val binderB = BinderPool.getInstance(applicationContext)
+                    .queryBinder(BinderPool.QUERY_CODE_BINDER_B)
+                val info = IBinderB.Stub.asInterface(binderB).getInfo("hello")
+                runOnUiThread {
+                    Toast.makeText(applicationContext, "info:$info", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: RemoteException) {
+                e.printStackTrace()
+            }
+        }.start()
     }
 
     var serviceConnection: ServiceConnection = object : ServiceConnection {
