@@ -1,7 +1,9 @@
 package com.example.myapplication
 
 import android.content.ComponentName
+import android.content.Context
 import android.content.ServiceConnection
+import android.media.AudioManager
 import android.os.Bundle
 import android.os.IBinder
 import android.os.RemoteException
@@ -79,6 +81,16 @@ class MainActivity : AppCompatActivity() {
                 e.printStackTrace()
             }
         }.start()
+
+        binding.buttonTestSystemService.setOnClickListener {
+            val audioManager: AudioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
+            audioManager.isMicrophoneMute = true
+            Toast.makeText(
+                applicationContext,
+                "isMicrophoneMute" + audioManager.isMicrophoneMute,
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 
     var serviceConnection: ServiceConnection = object : ServiceConnection {
