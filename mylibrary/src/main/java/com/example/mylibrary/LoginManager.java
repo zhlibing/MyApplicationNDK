@@ -9,11 +9,17 @@ import android.content.ServiceConnection;
 public class LoginManager implements registlistener {
     private volatile static LoginManager instance;
 
+    /**
+     * 双重校验锁单例
+     * @return
+     */
     public static LoginManager getInstance() {
         if (instance == null) {
             synchronized (LoginManager.class) {
-                instance = new LoginManager();
-                return instance;
+                if (instance == null) {
+                    instance = new LoginManager();
+                    return instance;
+                }
             }
         }
         return instance;
