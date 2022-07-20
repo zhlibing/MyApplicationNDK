@@ -17,4 +17,18 @@ public class PhoneFactory implements Supplier<Phone> {
         this.phone = new Phone();
         return this.phone;
     }
+
+    /**
+     * 内部类修饰符随意
+     */
+    public class InnerClass{
+
+    }
+}
+
+/**
+ * 不能有修饰符
+ */
+class OtherClass{
+
 }
