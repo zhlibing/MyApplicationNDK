@@ -4,12 +4,15 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.ServiceConnection
 import android.media.AudioManager
+import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
 import android.os.RemoteException
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.databinding.ActivityMainBinding
+import com.example.myapplication.systemservice.AccountInfo
 import com.example.mylibrary.*
 import com.example.mylibrary.pool.BinderPool
 
@@ -20,6 +23,7 @@ class MainActivity : AppCompatActivity() {
 
     private var iMyAidlInterface: IMyAidlInterface? = null
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -91,6 +95,8 @@ class MainActivity : AppCompatActivity() {
                 Toast.LENGTH_SHORT
             ).show()
         }
+
+        AccountInfo.getInstance().getAccount(this)
     }
 
     var serviceConnection: ServiceConnection = object : ServiceConnection {

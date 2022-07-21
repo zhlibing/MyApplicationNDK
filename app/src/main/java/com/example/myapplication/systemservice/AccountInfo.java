@@ -3,19 +3,33 @@ package com.example.myapplication.systemservice;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.Context;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+
+import java.util.Random;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class AccountInfo {
-    Context context;
 
-    public Context getContext() {
-        return context;
+    private int CODE = new Random().nextInt(10);
+
+    private static ConcurrentHashMap<Integer, AccountInfo> concurrentHashMap = new ConcurrentHashMap<>();
+
+    /**
+     * 容器式单例
+     * @return
+     */
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public static AccountInfo getInstance() {
+        return concurrentHashMap.computeIfAbsent(getInstance().CODE, instance -> new AccountInfo());
     }
 
-    void getAccount() {
+
+    public void getAccount(Context context) {
         AccountManager accountManager = (AccountManager) context.getSystemService(Context.ACCOUNT_SERVICE);
         accountManager.addOnAccountsUpdatedListener(accounts -> {
             if (accounts.length > 0) {
