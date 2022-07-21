@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.databinding.ActivityMainBinding
+import com.example.myapplication.enumTest.MyEnum
 import com.example.myapplication.systemservice.AccountInfo
 import com.example.mylibrary.*
 import com.example.mylibrary.pool.BinderPool
@@ -97,6 +98,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         AccountInfo.getInstance().getAccount(this)
+        MyEnum.Instance.innerMethod()
     }
 
     var serviceConnection: ServiceConnection = object : ServiceConnection {

@@ -1,5 +1,8 @@
 package com.example.myapplication.enumTest;
 
+/**
+ * 枚举单例
+ */
 public enum MyEnum {
     Instance,
     ONE("张三", 2),
@@ -19,5 +22,9 @@ public enum MyEnum {
         System.out.println(ONE.name + ONE.age);
         System.out.println(TWO.name + TWO.age);
         System.out.println(Instance.name + Instance.age);
+    }
+
+    public void innerMethod(){
+        System.out.println("innerMethod");
     }
 }
